@@ -631,7 +631,20 @@ export const swaggerDocument = {
     "/api/assets": {
       get: {
         summary: "List allowed assets",
-        description: "Returns the normalized list of allowed asset codes.",
+        description:
+          "Returns the normalized and deduplicated list of active allowed asset codes for payment streams. " +
+          "Supports linking telemetry logs to a stream ID via the streamId query parameter.",
+        parameters: [
+          {
+            name: "streamId",
+            in: "query",
+            required: false,
+            description: "Optional stream ID to correlate log signals with a specific stream.",
+            schema: {
+              type: "string",
+            },
+          },
+        ],
         responses: {
           "200": {
             description: "Allowed assets list.",
