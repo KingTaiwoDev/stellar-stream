@@ -496,9 +496,29 @@ app.get(
   },
 );
 
-app.get("/api/assets", (_req: Request, res: Response) => {
+app.get("/api/assets", (req: Request, res: Response) => {
+  const startPerf = Date.now();
+  const assets = getAllowedAssets();
+  const latencyMs = Math.max(0, Date.now() - startPerf);
+  const isNormalEmpty = assets.length === 0;
+
+  logger.info(
+    {
+      event: "asset_allowlist_query",
+      outcome: "success",
+      outcomeCode: 0,
+      latencyMs,
+      isNormalEmpty,
+      count: assets.length,
+      correlation_id: req.correlationId,
+      requestId: req.requestId,
+      streamId: typeof req.query.streamId === "string" ? req.query.streamId : undefined,
+    },
+    `Asset allowlist queried: ${assets.length} active allowed asset(s)`,
+  );
+
   res.json({
-    data: getAllowedAssets(),
+    data: assets,
   });
 });
 
