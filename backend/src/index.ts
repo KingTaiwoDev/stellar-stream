@@ -1131,6 +1131,12 @@ app.get(
         (stream) => stream.sender.toLowerCase() === query.sender!.toLowerCase(),
       );
     }
+    if (query.recipient) {
+      data = data.filter(
+        (stream) =>
+          stream.recipient.toLowerCase() === query.recipient!.toLowerCase(),
+      );
+    }
     if (query.asset) {
       data = data.filter(
         (stream) =>
@@ -1302,6 +1308,12 @@ app.get(
     if (query.sender) {
       data = data.filter(
         (stream) => stream.sender.toLowerCase() === query.sender!.toLowerCase(),
+      );
+    }
+    if (query.recipient) {
+      data = data.filter(
+        (stream) =>
+          stream.recipient.toLowerCase() === query.recipient!.toLowerCase(),
       );
     }
     if (query.asset) {
